@@ -149,7 +149,7 @@ class Upload
             $this->files[] = $file;
         }
 
-        return $this->files;
+        return [$this->files, $this->getNewHeaders($this->files, $content_range)];
     }
 
     public function validate($tmp_name, File $file, $error, $index)

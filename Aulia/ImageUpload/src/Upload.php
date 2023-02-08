@@ -194,7 +194,14 @@ class Upload
             {
                 $upload_path = $this->pathresolver->getUploadPath();
                 $file_path = $this->pathresolver->getUploadPath($file->name);
-                $this->filesystem->moveUploadedFile($tmp_name, $file_path);
+                
+                if($tmp_name && $this->filesystem->isUploadedFile($tmp_name))
+                {
+                    $this->filesystem->moveUploadedFile($tmp_name, $file_path);
+                } else
+                {
+                    $this->filesystem->writeToFile($tmp_name, $this->filesystem->getInputStream());
+                }
     
                 $file_size = $this->filesystem->getSize($file_path);
     
@@ -210,6 +217,11 @@ class Upload
                 $file = new File($file_path, $name);
                 $file->completed = $completed;
                 $file->size = $file_size;
+
+                if(isset($file->completed) && $file->completed)
+                {
+                    $this->filesystem->chmod($file->getRealPath(), 0644);
+                }
             }
         }
         return $file;

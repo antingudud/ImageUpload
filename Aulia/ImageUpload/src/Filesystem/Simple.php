@@ -3,7 +3,7 @@ namespace Aulia\ImageUpload\Filesystem;
 
 use Aulia\ImageUpload\Filesystem\Filesystem;
 
-class Mock implements Filesystem
+class Simple implements Filesystem
 {
 
     /**
@@ -27,7 +27,7 @@ class Mock implements Filesystem
      */
     public function moveUploadedFile(String $source,String $destination): bool
     {
-        return copy($source, $destination);
+        return copy($source, $destination) && unlink($source);
     }
 
     /**

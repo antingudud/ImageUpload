@@ -49,7 +49,6 @@ class Simple implements PathResolver
             {
                 $bakuretsu[$justBeforeExt] = trim(preg_replace("/\([0-9]+\)$/", "", $bakuretsu[$justBeforeExt]));
             }
-                ++$number;
                 $bakuretsu[$justBeforeExt] = $bakuretsu[$justBeforeExt] . " (" . ++$number . ")";
                 $name = implode(".", $bakuretsu);
         }
